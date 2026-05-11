@@ -1,0 +1,62 @@
+.pagina {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.secao {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.conteudo {
+    width: 100%;
+    max-width: 420px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.logoImg {
+    height: 60px;
+    width: auto;
+}
+
+.logoTexto {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #5aabdd;
+    letter-spacing: 0.05em;
+}
+
+.titulo {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #5aabdd;
+    margin-bottom: 0.5rem;
+}
+
+.descricao {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+.campos {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 1.2rem;
+}

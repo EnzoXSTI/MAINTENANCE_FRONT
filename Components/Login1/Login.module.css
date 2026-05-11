@@ -1,0 +1,77 @@
+.pagina {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
+}
+
+.secao {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.conteudo {
+    width: 100%;
+    max-width: 420px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 0.3rem;
+}
+
+.logoImg {
+    height: 7rem;
+    width: auto;
+}
+
+
+
+.subtitulo {
+    text-align: center;
+    color: #5aabdd;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+}
+
+.campos {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.linkEsqueci {
+    display: block;
+    text-align: left;
+    margin-top: 0.4rem;
+    color: #999;
+    font-size: 0.85rem;
+    text-decoration: none;
+}
+
+.areaBotao {
+    margin-bottom: 1rem;
+}
+
+.footerLogin {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.linkCadastro {
+    color: #5aabdd;
+    font-weight: 700;
+    text-decoration: none;
+}

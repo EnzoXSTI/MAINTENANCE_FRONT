@@ -1,0 +1,116 @@
+.pagina {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.secao {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.conteudoFormulario {
+    width: 100%;
+    max-width: 400px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 0.3rem;
+}
+
+.logoImg {
+    height: 60px;
+    width: auto;
+}
+
+.logoTexto {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #5aabdd;
+    letter-spacing: 0.05em;
+}
+
+.subtitulo {
+    text-align: center;
+    color: #5aabdd;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.tabs {
+    display: flex;
+    margin-bottom: 1.2rem;
+    border-radius: 6px;
+    overflow: hidden;
+    width: fit-content;
+}
+
+.tab {
+    padding: 5px 18px;
+    background-color: #e0e0e0;
+    color: #666;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+}
+
+.tabAtivo {
+    padding: 5px 18px;
+    background-color: #5aabdd;
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+}
+
+.campos {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin-bottom: 1.2rem;
+}
+
+.erro {
+    color: #e53935;
+    font-size: 0.85rem;
+    text-align: center;
+    margin-bottom: 0.8rem;
+}
+
+.sucesso {
+    color: #43a047;
+    font-size: 0.85rem;
+    text-align: center;
+    margin-bottom: 0.8rem;
+}
+
+.areaBotao {
+    margin-bottom: 1rem;
+}
+
+.footerCadastro {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.linkLogin {
+    color: #5aabdd;
+    font-weight: 700;
+    text-decoration: none;
+}
