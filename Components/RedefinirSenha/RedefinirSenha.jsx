@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import css from './RedefinirSenha.module.css';
 import Input from "../../Components/Input/Input.jsx";
 import Botao from "../../Components/Botao/Botao.jsx";
@@ -14,40 +14,45 @@ export default function RedefinirSenha() {
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        if (!erro && !mensagem) return;
+        const timer = setTimeout(() => {
+            setErro('');
+            setMensagem('');
+        }, 8000);
+        return () => clearTimeout(timer);
+    }, [erro, mensagem]);
+
     async function alterarSenha(e) {
         if (e) e.preventDefault();
         setErro('');
         setMensagem('');
 
-        const email = localStorage.getItem('email_recuperacao');
+        const token = localStorage.getItem('reset_token');
 
-        if (!email) {
-            setErro("Sessão expirada. Solicite o código novamente.");
+        if (!token) {
+            setErro("Sessão expirada. Solicite um novo código de recuperação.");
             return;
         }
 
         const formData = new FormData();
-        formData.append('email', email);
-        formData.append('senha', senha);
+        formData.append('nova_senha', senha);
         formData.append('confirmar_senha', confirmarSenha);
 
         try {
-            // OBS: Verifique o nome exato da rota no seu view.py
-            const resposta = await fetch('http://localhost:5000/redefinir_senha', {
+            const resposta = await fetch('http://10.92.3.224:5000/redefinir_senha', {
                 method: 'POST',
-                body: formData
+                body: formData,
+                headers: { 'Authorization': `Bearer ${token}` }
             });
 
             const dados = await resposta.json();
 
             if (resposta.ok) {
                 setMensagem("Senha alterada com sucesso!");
-                // Limpa o email do localStorage por segurança
+                localStorage.removeItem('reset_token');
                 localStorage.removeItem('email_recuperacao');
-
-                setTimeout(() => {
-                    navigate('/'); // Volta para o Login
-                }, 2000);
+                setTimeout(() => navigate('/'), 2000);
             } else {
                 setErro(dados.error || "Erro ao alterar a senha.");
             }
@@ -58,17 +63,28 @@ export default function RedefinirSenha() {
 
     return (
         <div className={css.pagina}>
+
             <Header />
             <main className={css.secao}>
-                <div className={css.conteudo}>
+
+
+            {erro && (
+                <div className={`${css.toast} ${css.toastErro}`}>
+                    <span>{erro}</span>
+                </div>
+            )}
+            {mensagem && (
+                <div className={`${css.toast} ${css.toastSucesso}`}>
+                    <span>{mensagem}</span>
+                </div>
+            )}
+<div className={css.conteudo}>
                     <div className={css.logo}>
                         <img src="/logo2.png" alt="Logo" className={css.logoImg} />
                         <span className={css.logoTexto}>MAINTENANCE</span>
                     </div>
-
                     <h2 className={css.titulo}>Redefinir senha</h2>
                     <p className={css.descricao}>Digite a nova senha abaixo e confirme para concluir a recuperação.</p>
-
                     <div className={css.campos}>
                         <Input
                             label="Nova Senha"
@@ -85,10 +101,6 @@ export default function RedefinirSenha() {
                             placeholder="Ex: Senha@123"
                         />
                     </div>
-
-                    {erro && <p style={{ color: 'red', fontSize: '0.85rem', textAlign: 'center', marginBottom: '10px' }}>{erro}</p>}
-                    {mensagem && <p style={{ color: '#5aabdd', fontSize: '0.85rem', textAlign: 'center', marginBottom: '10px' }}>{mensagem}</p>}
-
                     <Botao cor="Azul" texto="Alterar senha" acao={alterarSenha} />
                 </div>
             </main>

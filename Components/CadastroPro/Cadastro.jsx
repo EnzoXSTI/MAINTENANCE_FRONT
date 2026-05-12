@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import css from './Cadastro.module.css';
 import Input from "../../Components/Input/Input.jsx";
 import InputArquivo from "../../Components/InputArquivo/InputArquivo.jsx";
@@ -12,18 +12,26 @@ export default function Cadastro() {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [confirmarSenha, setConfirmarSenha] = useState('');
-    const [tipoUsuario, setTipoUsuario] = useState('1'); // 1 = Prestador, 2 = Empresa
+    const [tipoUsuario, setTipoUsuario] = useState('1');
     const [foto, setFoto] = useState(null);
     const [mensagem, setMensagem] = useState('');
     const [erro, setErro] = useState('');
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        if (!erro && !mensagem) return;
+        const timer = setTimeout(() => {
+            setErro('');
+            setMensagem('');
+        }, 8000);
+        return () => clearTimeout(timer);
+    }, [erro, mensagem]);
+
     async function cadastrar() {
         setErro('');
         setMensagem('');
 
-        // Monta o formulário para enviar para a API
         const formData = new FormData();
         formData.append('nome', nome);
         formData.append('email', email);
@@ -33,19 +41,19 @@ export default function Cadastro() {
         if (foto) formData.append('foto_perfil', foto);
 
         try {
-            const resposta = await fetch('http://localhost:5000/criar_usuarios', {
+            const resposta = await fetch('http://10.92.3.224:5000/criar_usuarios', {
                 method: 'POST',
-                body: formData
+                body: formData,
+                credentials: 'include'
             });
 
             const dados = await resposta.json();
 
             if (resposta.ok) {
-                // Cadastro OK — vai para a página de verificação de e-mail
                 setMensagem(dados.message);
-                setTimeout(() => navigate('/verificacao'), 2000);
+                localStorage.setItem('email_recuperacao', email);
+                setTimeout(() => navigate('/verificacao?fluxo=cadastro'), 2000);
             } else {
-                // Mostra o erro que veio da API
                 setErro(dados.error);
             }
 
@@ -56,35 +64,29 @@ export default function Cadastro() {
 
     return (
         <div className={css.pagina}>
+
             <Header />
 
             <main className={css.secao}>
-                <div className={css.conteudoFormulario}>
+
+
+            {erro && (
+                <div className={`${css.toast} ${css.toastErro}`}>
+                    <span>{erro}</span>
+                </div>
+            )}
+            {mensagem && (
+                <div className={`${css.toast} ${css.toastSucesso}`}>
+                    <span>{mensagem}</span>
+                </div>
+            )}
+<div className={css.conteudoFormulario}>
 
                     <div className={css.logo}>
                         <img src="/logo2.png" alt="Logo" className={css.logoImg} />
-                        <span className={css.logoTexto}>MAINTENANCE</span>
                     </div>
 
                     <p className={css.subtitulo}>Faça seu Cadastro</p>
-
-                    {/* Tabs Prestador / Empresa */}
-                    <div className={css.tabs}>
-                        <button
-                            type="button"
-                            className={tipoUsuario === '1' ? css.tabAtivo : css.tab}
-                            onClick={() => setTipoUsuario('1')}
-                        >
-                            Prestador
-                        </button>
-                        <button
-                            type="button"
-                            className={tipoUsuario === '2' ? css.tabAtivo : css.tab}
-                            onClick={() => setTipoUsuario('2')}
-                        >
-                            Empresa
-                        </button>
-                    </div>
 
                     <div className={css.campos}>
                         <Input label="Nome" type="text" input={nome}
@@ -95,19 +97,13 @@ export default function Cadastro() {
                             placeholder="Ex: usuario@gmail.com" />
                         <Input label="Senha" type="password" input={senha}
                             alterarInput={(e) => setSenha(e.target.value)}
-                               placeholder="Ex: Senha@123" />
+                            placeholder="Ex: Senha@123" />
                         <Input label="Confirmar Senha" type="password" input={confirmarSenha}
                             alterarInput={(e) => setConfirmarSenha(e.target.value)}
-                            placeholder="Ex: 1234" />
+                            placeholder="Ex: Senha@123" />
                         <InputArquivo label="Foto de perfil"
                             alterarInput={(e) => setFoto(e.target.files[0])} />
                     </div>
-
-                    {/* Mensagem de erro */}
-                    {erro && <p className={css.erro}>{erro}</p>}
-
-                    {/* Mensagem de sucesso */}
-                    {mensagem && <p className={css.sucesso}>{mensagem}</p>}
 
                     <div className={css.areaBotao}>
                         <Botao cor="Azul" texto="Cadastrar-se" acao={cadastrar} />

@@ -5,6 +5,7 @@ import Verificacao from "./Components/Verificacao/VerificacaoCodigo.jsx"
 import EnviarCodigo from "./Components/EnviarCodigo/EnviarCodigo.jsx";
 import RedefinirSenha from "./Components/RedefinirSenha/RedefinirSenha.jsx";
 import EditarPerfil from "./Components/EditarPro/EditarPerfil.jsx";
+import DashboardPro from "./Components/DashboardPro/DashboardProfessor.jsx"
 
 export default function App() {
     return (
@@ -14,8 +15,9 @@ export default function App() {
                 <Route path="/cadastro" element={<CadastroPro />} />
                 <Route path="/verificacao" element={<Verificacao />} />
                 <Route path="/enviarcodigo" element={<EnviarCodigo />} />
-                <Route path="/redefinirsenha" element={<RedefinirSenha />} />
-                <Route path="/editarPro" element={<EditarPerfil />} />
+                <Route path="/redefinir-senha" element={<RedefinirSenha />} />
+                <Route path="/editar-perfil" element={<EditarPerfil />} />
+                <Route path="/DashboardProfessor" element={<DashboardPro/>} />
             </Routes>
         </BrowserRouter>
     );

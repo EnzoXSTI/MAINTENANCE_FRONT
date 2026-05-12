@@ -14,7 +14,7 @@
 .input {
     width: 100%;
     padding: 12px 16px;
-    border: 1.5px solid #cccccc;
+    border: 1.5px solid #a3a3a3;
     border-radius: 50px;
     font-size: 0.95rem;
     color: #333;
@@ -25,7 +25,7 @@
 }
 
 .input::placeholder {
-    color: #bbbbbb;
+    color: #000;
 }
 
 .input:focus {

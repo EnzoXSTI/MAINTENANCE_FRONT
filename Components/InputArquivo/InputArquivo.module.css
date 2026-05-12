@@ -38,3 +38,9 @@
     font-size: 0.9rem;
     color: #333;
 }
+
+.icone {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+}

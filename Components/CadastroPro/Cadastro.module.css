@@ -1,3 +1,9 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 .pagina {
     display: flex;
     flex-direction: column;
@@ -5,13 +11,38 @@
     overflow-x: hidden;
 }
 
+.toast {
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto 0.8rem auto;
+    display: flex;
+    align-items: center;
+    padding: 0.7rem 1.2rem;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 500;
+}
+
+.toastErro {
+    background-color: #dc5252;
+    border: 1px solid #dc5252;
+    color: #fff;
+}
+
+.toastSucesso {
+    background-color: #56e84f;
+    border: 1px solid #56e84f;
+    color: #ffffff;
+}
+
 .secao {
     flex: 1;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 2rem 1rem;
-    background-color: #ffffff;
+    background-color: #fff;
     box-sizing: border-box;
     width: 100%;
 }
@@ -30,51 +61,16 @@
 }
 
 .logoImg {
-    height: 60px;
+    height: 7rem;
     width: auto;
-}
-
-.logoTexto {
-    font-size: 1.1rem;
-    font-weight: 800;
-    color: #5aabdd;
-    letter-spacing: 0.05em;
 }
 
 .subtitulo {
     text-align: center;
     color: #5aabdd;
-    font-size: 0.95rem;
+    font-size: 1.2rem;
     font-weight: 500;
     margin-bottom: 1rem;
-}
-
-.tabs {
-    display: flex;
-    margin-bottom: 1.2rem;
-    border-radius: 6px;
-    overflow: hidden;
-    width: fit-content;
-}
-
-.tab {
-    padding: 5px 18px;
-    background-color: #e0e0e0;
-    color: #666;
-    font-size: 0.85rem;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-}
-
-.tabAtivo {
-    padding: 5px 18px;
-    background-color: #5aabdd;
-    color: #ffffff;
-    font-size: 0.85rem;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
 }
 
 .campos {
@@ -82,20 +78,6 @@
     flex-direction: column;
     gap: 0.7rem;
     margin-bottom: 1.2rem;
-}
-
-.erro {
-    color: #e53935;
-    font-size: 0.85rem;
-    text-align: center;
-    margin-bottom: 0.8rem;
-}
-
-.sucesso {
-    color: #43a047;
-    font-size: 0.85rem;
-    text-align: center;
-    margin-bottom: 0.8rem;
 }
 
 .areaBotao {

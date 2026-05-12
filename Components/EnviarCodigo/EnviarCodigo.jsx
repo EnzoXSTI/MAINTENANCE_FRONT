@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import css from './EnviarCodigo.module.css';
 import Input from "../../Components/Input/Input.jsx";
 import Botao from "../../Components/Botao/Botao.jsx";
 import Footer from "../../Components/Footer/Footer.jsx";
 import Header from "../../Components/Header/Header.jsx";
-import { useNavigate } from "react-router-dom"; // Importei o useNavigate
+import { useNavigate } from "react-router-dom";
 
 export default function EnviarCodigo() {
     const [email, setEmail] = useState('');
@@ -13,17 +13,25 @@ export default function EnviarCodigo() {
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        if (!erro && !mensagem) return;
+        const timer = setTimeout(() => {
+            setErro('');
+            setMensagem('');
+        }, 8000);
+        return () => clearTimeout(timer);
+    }, [erro, mensagem]);
+
     async function solicitarCodigo(e) {
         if (e) e.preventDefault();
         setErro('');
-        setMensagem('Enviando e-mail...'); // Feedback visual de carregamento
+        setMensagem('Enviando e-mail...');
 
         const formData = new FormData();
         formData.append('email', email);
 
         try {
-            // OBS: Verifique se o nome da sua rota no Flask é exatamente '/esqueci_senha' ou '/enviar_codigo'
-            const resposta = await fetch('http://localhost:5000/esqueci_senha', {
+            const resposta = await fetch('http://10.92.3.224:5000/esqueci_senha', {
                 method: 'POST',
                 body: formData
             });
@@ -31,11 +39,9 @@ export default function EnviarCodigo() {
             const dados = await resposta.json();
 
             if (resposta.ok) {
+                localStorage.setItem('email_recuperacao', email);
                 setMensagem("Código enviado com sucesso!");
-                // Aguarda 1 segundo e meio e manda para a tela de verificação
-                setTimeout(() => {
-                    navigate('/verificacao'); // Ajuste para a rota correta do seu frontend
-                }, 1500);
+                setTimeout(() => navigate('/verificacao'), 1500);
             } else {
                 setMensagem('');
                 setErro(dados.error || "Erro ao enviar código.");
@@ -48,10 +54,23 @@ export default function EnviarCodigo() {
 
     return (
         <div className={css.pagina}>
+
             <Header />
 
             <main className={css.secao}>
-                <div className={css.conteudo}>
+
+
+            {erro && (
+                <div className={`${css.toast} ${css.toastErro}`}>
+                    <span>{erro}</span>
+                </div>
+            )}
+            {mensagem && (
+                <div className={`${css.toast} ${css.toastSucesso}`}>
+                    <span>{mensagem}</span>
+                </div>
+            )}
+<div className={css.conteudo}>
 
                     <div className={css.logo}>
                         <img src="/logo2.png" alt="Logo" className={css.logoImg} />
@@ -70,11 +89,7 @@ export default function EnviarCodigo() {
                         />
                     </div>
 
-                    {erro && <p style={{ color: 'red', fontSize: '0.85rem', textAlign: 'center', marginBottom: '10px' }}>{erro}</p>}
-                    {mensagem && <p style={{ color: '#5aabdd', fontSize: '0.85rem', textAlign: 'center', marginBottom: '10px' }}>{mensagem}</p>}
-
                     <div className={css.botoes}>
-                        {/* Botão agora executa a função */}
                         <Botao cor="Azul" texto="Verificar E-mail" acao={solicitarCodigo} />
                         <Botao cor="Branco" texto="Voltar ao Login" pagina="/" />
                     </div>
